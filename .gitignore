@@ -1,0 +1,67 @@
+env
+.env
+
+# Python-related
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+
+# Django-related
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+db.sqlite3-journal
+/media
+/static
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+
+# IDE-related
+.vscode/
+.idea/
+*.iml
+
+# MacOS-specific
+.DS_Store
+
+# Windows-specific
+Thumbs.db
+
+# Python distribution files
+*.egg
+*.egg-info/
+dist/
+build/
+*.tgz
+*.zip
+
+# Pytest
+.cache/
+
+# Coverage
+.coverage
+.coverage.*
+*.coveragerc
+
+# Django migrations
+*/migrations/*.pyc
+*/migrations/*-old
+
+# Simple JWT Tokens 
+*.jwt
+*.jwk
+
+# PyCharm
+.idea/
+
+# mypy
+.mypy_cache/
+.dmypy.json
