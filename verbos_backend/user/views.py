@@ -1,5 +1,5 @@
 
-from .serializers import RegisterUserSerializer
+from .serializers import RegisterUserSerializer,LogoutUserSerializer
 from rest_framework import generics,permissions , status
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
@@ -20,6 +20,7 @@ class RegisterUserView(generics.CreateAPIView):
 
 # logout
 class LogoutUserView(generics.GenericAPIView):
+    serializer_class = LogoutUserSerializer
     permission_class = [permissions.IsAuthenticated]
 
     def post(self,request):
