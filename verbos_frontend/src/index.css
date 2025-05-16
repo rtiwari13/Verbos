@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* :root { */
   /* --radius: 0.5rem;
@@ -137,4 +138,10 @@
   --gray-700: hsl(0deg 0% 35%);
   --gray-800: hsl(0deg 0% 25%);
   --gray-900: hsl(0deg 0% 15%);  /* Darkest gray */
+}
+
+.ProseMirror h2 {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.75rem !important;
 }
