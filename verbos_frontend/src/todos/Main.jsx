@@ -1,93 +1,178 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { FaLightbulb } from "react-icons/fa6";
 import { format } from "date-fns";
 
-const Main = ({ selectedCategory }) => {
-    const [tasks, setTasks] = useState([]);
-    const [input, setInput] = useState("");
+import TaskItem from "./TaskItem";
+
+const Main = ({ 
+  selectedCategory, 
+  tasks, 
+  onAddTask, 
+  onToggleComplete, 
+  onToggleImportant,
+  onDeleteTask,
+  onUpdateTaskText
+}) => {
   
-    const addTask = (e) => {
-      e.preventDefault();
-      if (!input.trim()) return;
-      setTasks((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          text: input,
-          category: selectedCategory,
-          completed: false,
-        },
-      ]);
+  const [input, setInput] = useState("");
+  const [editingTask, setEditingTask] = useState(null);
+  const [editText, setEditText] = useState("");
+  const [showThemeMenu, setShowThemeMenu] = useState(false);
+  const inputRef = useRef(null);
+  const editInputRef = useRef(null);
+  const themeMenuRef = useRef(null);
+
+  useEffect(() => {
+    if (editingTask) {
+      editInputRef.current?.focus();
+    }
+  }, [editingTask]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (themeMenuRef.current && !themeMenuRef.current.contains(event.target)) {
+        setShowThemeMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (input.trim()) {
+      onAddTask(input.trim());
       setInput("");
-    };
-  
-    const toggleTask = (id) => {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === id ? { ...task, completed: !task.completed } : task
-        )
-      );
-    };
-  
-    return (
-      <div className="flex-1 bg-gradient-to-b from-sky-300 to-sky-100 relative">
-        <div className="p-8">
-          <div className="flex justify-between items-center text-white">
-            <div>
-              <h1 className="text-3xl font-semibold">{selectedCategory}</h1>
-              <p className="text-sm">{format(new Date(), "EEEE, d MMMM")}</p>
-            </div>
-            <div className="flex space-x-4 text-white">
-              <button className="p-2 rounded hover:bg-white/10">
-                <FaLightbulb size={18} />
-              </button>
-              <button className="p-2 rounded hover:bg-white/10">
-                <FiMoreHorizontal size={18} />
-              </button>
-            </div>
+    }
+  };
+
+  const handleEdit = (task) => {
+    setEditingTask(task.id);
+    setEditText(task.text);
+  };
+
+  const handleEditSubmit = (taskId) => {
+    if (editText.trim() && editText !== tasks.find(t => t.id === taskId)?.text) {
+      onUpdateTaskText(taskId, editText.trim());
+    }
+    setEditingTask(null);
+    setEditText("");
+  };
+
+  const filteredTasks = tasks.filter(task => {
+    if (selectedCategory === "Important") {
+      return task.important;
+    }
+    return task.category === selectedCategory;
+  });
+
+  const incompleteTasks = filteredTasks.filter(task => !task.completed);
+  const completedTasks = filteredTasks.filter(task => task.completed);
+
+  return (
+    <div className="flex-1 bg-[var(--background)] text-[var(--foreground)] relative overflow-hidden">
+      <div className="p-8 h-full flex flex-col">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">{selectedCategory}</h1>
+            <p className="text-[var(--muted-foreground)]">{format(new Date(), "EEEE, d MMMM")}</p>
           </div>
-  
-          <div className="mt-8 space-y-4">
-            {tasks
-              .filter((task) => task.category === selectedCategory)
-              .map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center bg-white/70 rounded px-4 py-3 shadow"
-                >
-                  <input
-                    type="checkbox"
-                    checked={task.completed}
-                    onChange={() => toggleTask(task.id)}
-                    className="mr-3"
-                  />
-                  <span
-                    className={`text-gray-800 text-sm flex-1 ${
-                      task.completed ? "line-through text-gray-500" : ""
-                    }`}
-                  >
-                    {task.text}
-                  </span>
+          <div className="relative" ref={themeMenuRef}>
+            <button
+              onClick={() => setShowThemeMenu(!showThemeMenu)}
+              className="p-2 rounded-lg hover:bg-[var(--sidebar-accent)]/40 transition-colors duration-200"
+            >
+              <FiMoreHorizontal size={20} />
+            </button>
+
+            {showThemeMenu && (
+              <div className="absolute right-0 top-12 w-48 bg-[var(--card)] rounded-lg shadow-lg py-2 z-50">
+                <div className="px-4 py-2 text-sm text-[var(--muted-foreground)] border-b border-[var(--border)]">
+                  Choose Theme
                 </div>
-              ))}
+                {Object.entries(themes).map(([key, value]) => (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      setCurrentTheme(key);
+                      setShowThemeMenu(false);
+                    }}
+                    className={`w-full px-4 py-2 text-left text-sm hover:bg-[var(--sidebar-accent)] flex items-center justify-between
+                      ${currentTheme === key ? 'text-[var(--primary)]' : 'text-[var(--foreground)]'}`}
+                  >
+                    {value.name}
+                    {currentTheme === key && <span className="text-[var(--primary)]">✓</span>}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-  
-        <form
-          onSubmit={addTask}
-          className="absolute bottom-8 w-full flex justify-center"
-        >
+
+        {/* Task Lists */}
+        <div className="flex-1 overflow-y-auto space-y-6">
+          {/* Incomplete Tasks */}
+          <div className="space-y-2">
+            {incompleteTasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                isEditing={editingTask === task.id}
+                editText={editText}
+                setEditText={setEditText}
+                onEditSubmit={handleEditSubmit}
+                editInputRef={editInputRef}
+                onToggleComplete={onToggleComplete}
+                onToggleImportant={onToggleImportant}
+                onDelete={onDeleteTask}
+                onEdit={handleEdit}
+               
+              />
+            ))}
+          </div>
+
+          {/* Completed Tasks */}
+          {completedTasks.length > 0 && (
+            <div>
+              <h3 className="text-[var(--muted-foreground)] text-sm font-medium mb-2">Completed</h3>
+              <div className="space-y-2">
+                {completedTasks.map((task) => (
+                  <TaskItem
+                    key={task.id}
+                    task={task}
+                    isEditing={editingTask === task.id}
+                    editText={editText}
+                    setEditText={setEditText}
+                    onEditSubmit={handleEditSubmit}
+                    editInputRef={editInputRef}
+                    onToggleComplete={onToggleComplete}
+                    onToggleImportant={onToggleImportant}
+                    onDelete={onDeleteTask}
+                    onEdit={handleEdit}
+                    
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Add Task Form */}
+        <form onSubmit={handleSubmit} className="mt-4">
           <input
+            ref={inputRef}
             type="text"
             placeholder="Add a task..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="w-[70%] px-4 py-3 rounded-full shadow-md bg-white/80 backdrop-blur placeholder-gray-600"
+            className="w-full px-4 py-3 rounded-lg bg-[var(--card)] text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition-shadow duration-200"
           />
         </form>
       </div>
-    );
-  };
-  
-  export default Main;
+    </div>
+  );
+};
+
+export default Main;
