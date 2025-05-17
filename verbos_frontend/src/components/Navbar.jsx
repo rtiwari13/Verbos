@@ -14,7 +14,7 @@ function Navbar() {
         <a href="/todo" className="hover:text-[var(--primary)] transition-colors duration-200">Todos</a>
         <a href="" className="hover:text-[var(--primary)] transition-colors duration-200">Features</a>
         <a href="" className="hover:text-[var(--primary)] transition-colors duration-200">Services</a>
-        <a href="" className="hover:text-[var(--primary)] transition-colors duration-200">Login</a>
+        
       </div>
 
       <div className="">
