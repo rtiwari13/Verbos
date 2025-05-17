@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-export default function AuthPopup() {
+export default function AuthPopup({
+  title 
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // true = Login, false = Sign Up
   const [form, setForm] = useState({
@@ -29,9 +31,9 @@ export default function AuthPopup() {
     <div className=" flex items-center justify-center">
       <button
         onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+        className="px-4 py-2 bg-[var(--primary)] text-[var(--primary-foreground)] rounded hover:bg-[var(--ring)] transition-colors duration-200"
       >
-        {isLogin ? "Login" : "Sign Up"}
+        {title || "Login"}
       </button>
 
       {isOpen && (
@@ -40,16 +42,16 @@ export default function AuthPopup() {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
+            className="bg-[var(--card)] p-6 rounded-lg shadow-lg w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">
+              <h2 className="text-xl font-bold text-[var(--foreground)]">
                 {isLogin ? "Login to your account" : "Create a new account"}
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-500 hover:text-gray-800"
+                className="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
               >
                 &times;
               </button>
@@ -64,7 +66,7 @@ export default function AuthPopup() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 px-3 py-2 rounded"
+                  className="w-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] px-3 py-2 rounded placeholder-[var(--muted-foreground)]"
                 />
               )}
               <input
@@ -74,7 +76,7 @@ export default function AuthPopup() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 px-3 py-2 rounded"
+                className="w-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] px-3 py-2 rounded placeholder-[var(--muted-foreground)]"
               />
               <input
                 type="password"
@@ -83,24 +85,24 @@ export default function AuthPopup() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 px-3 py-2 rounded"
+                className="w-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] px-3 py-2 rounded placeholder-[var(--muted-foreground)]"
               />
 
               <button
                 type="submit"
-                className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
+                className="w-full bg-[var(--primary)] text-[var(--primary-foreground)] py-2 rounded hover:bg-[var(--ring)] transition-colors duration-200"
               >
                 {isLogin ? "Login" : "Sign Up"}
               </button>
             </form>
 
-            <div className="mt-4 text-center text-sm text-gray-600">
+            <div className="mt-4 text-center text-sm text-[var(--muted-foreground)]">
               {isLogin ? (
                 <>
-                  Don’t have an account?{" "}
+                  Don't have an account?{" "}
                   <button
                     onClick={toggleMode}
-                    className="text-indigo-600 hover:underline"
+                    className="text-[var(--primary)] hover:underline"
                   >
                     Sign up
                   </button>
@@ -110,7 +112,7 @@ export default function AuthPopup() {
                   Already have an account?{" "}
                   <button
                     onClick={toggleMode}
-                    className="text-indigo-600 hover:underline"
+                    className="text-[var(--primary)] hover:underline"
                   >
                     Log in
                   </button>
