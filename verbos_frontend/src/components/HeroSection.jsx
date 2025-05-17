@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import AuthPopup from "./AuthPopup";
 
 function HeroSection() {
   return (
@@ -32,7 +33,8 @@ function HeroSection() {
             Verbos is an all-in-one workspace platform that combines note-taking,
             todos, and knowledge management into a single space.
           </p>
-          <button className="text-[var(--primary-foreground)] bg-[var(--primary)] hover:bg-[var(--ring)] rounded-2xl shadow-xl p-3 transition-colors duration-200">Get Started For Free</button>
+          {/* <button className="text-[var(--primary-foreground)] bg-[var(--primary)] hover:bg-[var(--ring)] rounded-2xl shadow-xl p-3 transition-colors duration-200">Get Started For Free</button> */}
+          <AuthPopup title={"Get started for free"}/> 
         </motion.div>
       </div>
     </section>
