@@ -1,12 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../'))
-from app.db.session import Base
-from app.users.models import User
-
-from app.core.config import DATABASE_URL
-
-
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -27,7 +18,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = Base.metadata
+target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -35,7 +26,7 @@ target_metadata = Base.metadata
 # ... etc.
 
 
-def run_migrations_online():
+def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -47,7 +38,6 @@ def run_migrations_online():
     script output.
 
     """
-    connectable = create_engine(DATABASE_URL)
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
