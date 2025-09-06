@@ -7,6 +7,12 @@ class UserCreate(BaseModel):
     first_name:str
     last_name:str
 
+class UserUpdate(BaseModel):
+    username:str
+    email:str
+    first_name:str
+    last_name:str
+    
 class LoginRequest(BaseModel):
     username:str
     password:str

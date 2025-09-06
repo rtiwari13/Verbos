@@ -14,3 +14,4 @@ class User(Base):
     last_name = Column(String(50))
     password = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.now)
+    # updated_at = Column(DateTime, default=datetime.now)
