@@ -178,22 +178,28 @@ def view_user_profile(
 
 
 @user_router.put("/update_profile")
-def update_user_profile(user: UserUpdate,user_id: str = Depends(get_user_id), db: Session = Depends(get_db)):
+def update_user_profile(
+    user: UserUpdate, user_id: str = Depends(get_user_id), db: Session = Depends(get_db)
+):
     user_data: User = db.query(User).filter(User.user_id == user_id).first()
 
     if user_data is None:
         return {"success": False, "message": "no user found"}
-    
+
     user_data.username = user.username
-    user_data.email= user.email
-    user_data.first_name= user.first_name
+    user_data.email = user.email
+    user_data.first_name = user.first_name
     user_data.last_name = user.last_name
-    
+
     db.commit()
-    db.refresh(user_data) 
+    db.refresh(user_data)
     user_data.password = None
 
-    return {"success":True, "message":" Your profile is updated successfully", "user":user_data}
+    return {
+        "success": True,
+        "message": " Your profile is updated successfully",
+        "user": user_data,
+    }
 
 
 @user_router.delete("/delete_profile")
