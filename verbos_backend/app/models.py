@@ -21,7 +21,6 @@ class User(Base):
     notebooks = relationship("Notebook",back_populates="author",cascade="all, delete-orphan")
 
 
-
 class Notebook(Base):
 
     __tablename__ = "notebooks"

@@ -2,11 +2,8 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../'))
 from app.db.session import Base
-from app.users.models import User
-
+from app.models import User, Notebook , NotebookPage
 from app.core.config import DATABASE_URL
-
-
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
