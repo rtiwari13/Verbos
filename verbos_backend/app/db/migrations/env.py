@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../'))
 from app.db.session import Base
-from app.models import User, Notebook , NotebookPage
+from app.models import User, Notebook , NotebookPage , Document
 from app.core.config import DATABASE_URL
 from logging.config import fileConfig
 

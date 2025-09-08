@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 
-
 class User(Base):
 
     __tablename__ = "users"
@@ -19,6 +18,8 @@ class User(Base):
     updated_at = Column(DateTime, default=datetime.now)
 
     notebooks = relationship("Notebook",back_populates="author",cascade="all, delete-orphan")
+
+    docs = relationship("Document" , back_populates = "doc_author",cascade="all, delete-orphan")
 
 
 class Notebook(Base):
@@ -57,4 +58,17 @@ class NotebookPage(Base):
     page_for_notebook = relationship("Notebook", back_populates="pages")
 
 
+class Document(Base):
+
+    __tablename__ = "documents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255), index=True)
+    content = Column(Text)
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    user_id = Column(Integer, ForeignKey("users.user_id"))
+    
+    doc_author = relationship("User", back_populates="docs")
 
