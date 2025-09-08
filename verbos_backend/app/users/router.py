@@ -3,7 +3,7 @@ from app.users.schemas import UserCreate, UserUpdate, LoginRequest
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from app.db.session import get_db
-from app.users.models import User
+from app.models import User
 from app.users.utils import (
     hash_password,
     match_password,
