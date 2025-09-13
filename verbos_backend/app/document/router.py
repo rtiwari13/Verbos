@@ -13,7 +13,7 @@ doc_router = APIRouter(prefix="/document", tags=["Document"])
 def create_document(
     document: DocumentCreate,
     db: Session = Depends(get_db),
-    user_id: str = Depends(get_user_id),
+    user_id: str = Depends(get_user_id)
 ):
     try:
         new_doc = Document(
@@ -26,7 +26,7 @@ def create_document(
         return {
             "success": True,
             "message": "document created successfully",
-            "document_created": new_doc,
+            "document_created": new_doc
         }
 
     except SQLAlchemyError as e:
@@ -44,7 +44,7 @@ def create_document(
 
 
 @doc_router.get("")
-def read_document(db: Session = Depends(get_db), user_id: str = Depends(get_user_id)):
+def view_document(db: Session = Depends(get_db), user_id: str = Depends(get_user_id)):
     try:
 
         all_documents: Document = (
