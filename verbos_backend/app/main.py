@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.users.router import auth_router, user_router
 from app.notebook.router import notebook_page_router, notebook_router
 from app.document.router import doc_router
+from app.task_manager.router import board_router , task_router , card_router , tag_router
 
 app = FastAPI()
 
@@ -14,3 +15,7 @@ app.include_router(user_router)
 app.include_router(notebook_router)
 app.include_router(notebook_page_router)
 app.include_router(doc_router)
+app.include_router(board_router)
+app.include_router(task_router)
+app.include_router(card_router)
+app.include_router(tag_router)
