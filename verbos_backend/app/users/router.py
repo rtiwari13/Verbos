@@ -100,7 +100,7 @@ def login_user(response: Response, user: LoginRequest, db: Session = Depends(get
             secure=True,
             expires=(datetime.datetime.now() + datetime.timedelta(days=15)).timestamp(),
         )
-        return {"success": True, "message": "logged in successfully"}
+        return {"success": True, "message": "logged in successfully", "user_data": user_data, "auth_token":access_token}
 
     except HTTPException:
         raise
