@@ -1,0 +1,13 @@
+
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:8000/',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  // allow sending and receiving cookies from the backend
+  withCredentials: true,
+});
+
+export default axiosInstance;
