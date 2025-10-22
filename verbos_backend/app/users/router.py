@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, Response, Cookie, HTTPException, status
+
+from fastapi import APIRouter, Depends, Response, Cookie, HTTPException, status, Request
 from app.users.schemas import UserCreate, UserUpdate, LoginRequest
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -168,13 +169,17 @@ def generate_access_from_refresh(
 
 @user_router.get("/profile")
 def view_user_profile(
+    request: Request,
     user_id: str = Depends(get_user_id), db: Session = Depends(get_db)
 ):
     user_data: User = db.query(User).filter(User.user_id == user_id).first()
+    user_data.password = None
 
     if user_data is None:
         return {"success": False, "message": "no user found"}
-    return user_data
+
+    token = request.cookies.get("access_token") 
+    return {"success": True, "user": user_data , "auth_token": token}
 
 
 @user_router.put("/update_profile")
