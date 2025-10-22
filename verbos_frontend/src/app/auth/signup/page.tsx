@@ -52,7 +52,7 @@ export default function SignUp() {
           userId: response.data.user_data.user_id || null,
           firstName: response.data.user_data.first_name || null,
           lastName: response.data.user_data.last_name || null,
-          usrename: response.data.user_data.username || null,
+          username: response.data.user_data.username || null,
           email: response.data.user_data.email || null,
           createdAt: response.data.user_data.created_at || null,
           updatedAt: response.data.user_data.updated_at || null,
