@@ -3,7 +3,10 @@ import { useEffect, useRef } from "react";
 import axios from "@/lib/axiosInstance";
 import { User } from "@/types/user";
 import { useAppDispatch } from "@/redux/storeHooks";
-import { login,logout } from "@/redux/features/auth/authSlice";
+import { login, logout } from "@/redux/features/auth/authSlice";
+import { usePathname } from "next/navigation";
+
+const protectedRoutes = ["/document", "/notebook", "/task-manager"];
 
 export default function AuthProvider({
   children,
@@ -12,6 +15,20 @@ export default function AuthProvider({
 }) {
   const dispatch = useAppDispatch();
   const isMounted = useRef(true);
+  const currentRoute = usePathname();
+
+  async function isProtectedRoute() {
+    try {
+      for (const element of protectedRoutes) {
+        if (element === currentRoute) {
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      window.location.href = "/auth/login";
+    }
+  }
 
   async function fetchProfile() {
     try {
@@ -30,18 +47,20 @@ export default function AuthProvider({
           dispatch(login({ user, authToken: response.data.auth_token }));
         }
       } else {
-        console.error(
-          "fetchProfile error",
-          response?.data?.message || "Unknown error"
-        );
+        const isProtected = await isProtectedRoute();
+        if (isProtected) {
+          window.location.href = "/auth/login";
+        }
       }
     } catch (error) {
       console.error(error);
-    }
-  }
 
-  async function clearAuthData() {
-    dispatch(logout());
+      const isProtected = await isProtectedRoute();
+
+      if (isProtected && !currentRoute.includes("auth")) {
+        window.location.href = "/auth/login";
+      }
+    }
   }
 
   useEffect(() => {
@@ -50,8 +69,6 @@ export default function AuthProvider({
       isMounted.current = false;
     };
   }, []);
-
-
 
   return <>{children}</>;
 }

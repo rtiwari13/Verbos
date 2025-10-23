@@ -1,3 +1,7 @@
+// feature Slice  
+// reducers
+// register reducers in store
+// use reducers ans state at required places
 
 
 // Terms - 

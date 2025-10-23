@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import logo from "@/assets/home_page_images/logo.png"
+import logo from "@/assets/home_page_images/logo.png";
+import ProfileCard from "./profilecard";
 
 export default function Navbar() {
+  const isLoggedIn = true;
+
   return (
     <nav className=" bg-background w-full sticky top-0 z-50 ">
       <div className="  flex  justify-between gap-8 max-w-7xl  mx-auto w-full h-16 ">
@@ -34,14 +37,24 @@ export default function Navbar() {
             <li className="font-semibold hover:text-primary hover:cursor-pointer">
               Explore
             </li>
+
+            <a href="">
+              <li className="font-semibold hover:text-primary hover:cursor-pointer">
+                Profile
+              </li>
+            </a>
           </ul>
 
           <Github className="hover:text-primary hover:cursor-pointer" />
           <Switch className=" hover:cursor-pointer" />
 
-          <Button className=" text-foreground hover:cursor-pointer rounded-lg">
-            Get Started
-          </Button>
+          {isLoggedIn ? (
+            <ProfileCard />
+          ) : (
+            <Button className=" text-foreground hover:cursor-pointer rounded-lg">
+              Get Started
+            </Button>
+          )}
         </div>
       </div>
     </nav>
