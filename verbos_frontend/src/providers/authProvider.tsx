@@ -53,7 +53,7 @@ export default function AuthProvider({
         }
       }
     } catch (error) {
-      console.error(error);
+     
 
       const isProtected = await isProtectedRoute();
 

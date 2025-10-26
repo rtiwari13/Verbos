@@ -3,6 +3,7 @@ import { Github } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import logo from "@/assets/home_page_images/logo.png";
 import ProfileCard from "./profilecard";
+import { ModeToggle } from "./theme";
 
 export default function Navbar() {
   const isLoggedIn = true;
@@ -46,7 +47,7 @@ export default function Navbar() {
           </ul>
 
           <Github className="hover:text-primary hover:cursor-pointer" />
-          <Switch className=" hover:cursor-pointer" />
+          <ModeToggle/>
 
           {isLoggedIn ? (
             <ProfileCard />
