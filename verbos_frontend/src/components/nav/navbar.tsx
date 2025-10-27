@@ -4,9 +4,10 @@ import { Switch } from "@/components/ui/switch";
 import logo from "@/assets/home_page_images/logo.png";
 import ProfileCard from "./profilecard";
 import { ModeToggle } from "./theme";
+import { useAppSelector } from "@/redux/storeHooks";
 
 export default function Navbar() {
-  const isLoggedIn = true;
+  const isLoggedIn = useAppSelector(state => state.auth.authToken)
 
   return (
     <nav className=" bg-background w-full sticky top-0 z-50 ">
@@ -52,9 +53,12 @@ export default function Navbar() {
           {isLoggedIn ? (
             <ProfileCard />
           ) : (
-            <Button className=" text-foreground hover:cursor-pointer rounded-lg">
+            <a href="/auth/signup">
+              <Button className=" text-foreground hover:cursor-pointer rounded-lg">
               Get Started
             </Button>
+            </a>
+            
           )}
         </div>
       </div>
