@@ -1,3 +1,4 @@
 export interface Theme {
-    ColorTheme : "Light" | "Dark" | "System"
+    ColorTheme : "Light" | "Dark" | "System",
+    isLoading : Boolean
 }

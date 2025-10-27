@@ -3,7 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Theme } from "@/types/theme";
 
 const initialState : Theme =  {
-    ColorTheme : "System"
+    ColorTheme : "System",
+    isLoading : true
 }
 
 
@@ -18,9 +19,16 @@ const themeSlice = createSlice({
 
             state.ColorTheme = action.payload.newTheme.ColorTheme;
 
+        },
+        setLoading :(
+            state,
+            action: PayloadAction<{newTheme:Theme}>
+
+        ) => {
+            state.isLoading = action.payload.newTheme.isLoading;
         }
     }
 })
 
-export const {updateTheme} = themeSlice.actions;
+export const {updateTheme , setLoading} = themeSlice.actions;
 export default themeSlice.reducer;

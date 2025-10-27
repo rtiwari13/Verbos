@@ -56,7 +56,7 @@ const ProfileCard = () => {
         className="flex items-center gap-3 p-1 rounded-md cursor-pointer"
       >
         <img
-          src="https://via.placeholder.com/40"
+          src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg"
           alt="Profile"
           className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
         />

@@ -5,6 +5,7 @@ import { User } from "@/types/user";
 import { useAppDispatch } from "@/redux/storeHooks";
 import { login, logout } from "@/redux/features/auth/authSlice";
 import { usePathname } from "next/navigation";
+import { setLoading } from "@/redux/features/theme/themeSlice";
 
 const protectedRoutes = ["/document", "/notebook", "/task-manager"];
 
@@ -53,13 +54,24 @@ export default function AuthProvider({
         }
       }
     } catch (error) {
-     
-
       const isProtected = await isProtectedRoute();
 
       if (isProtected && !currentRoute.includes("auth")) {
         window.location.href = "/auth/login";
       }
+    } finally {
+      setTimeout(
+        () =>
+          dispatch(
+            setLoading({
+              newTheme: {
+                isLoading: false,
+                ColorTheme: "System",
+              },
+            })
+          ),
+        2500
+      );
     }
   }
 
