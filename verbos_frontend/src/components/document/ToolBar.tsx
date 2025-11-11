@@ -49,16 +49,28 @@ import {
 
 import { useAppSelector } from "@/redux/storeHooks";
 import ToolbarButton from "./ToolButton";
+import axios from "@/lib/axiosInstance";
 
 export default function Tools() {
   const doc = useAppSelector((state) => state.docs.selectedDocument);
   const [position, setPosition] = React.useState("bottom");
 
-  // async function onSave = ( ) => {
-
-  // }
+   const onSave = async( ) => {
+    try {
+     
+      const response =  await axios.put(`/document/${doc?.id}`,{
+        name : doc?.name,
+        content : doc?.content
+      });
+      
+      
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   const handleOnchange = () => {};
+
   return (
     <div className="">
       {/* First row: logo + title + menu */}
@@ -154,7 +166,8 @@ export default function Tools() {
             <Button
               size="sm"
               variant="default"
-              className="gap-1 ml-auto text-accent-foreground"
+              className="gap-1 ml-auto text-accent-foreground cursor-pointer"
+              onClick = {onSave}
             >
               Save
             </Button>
