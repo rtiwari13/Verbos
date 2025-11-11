@@ -40,11 +40,7 @@ export default function Navbar() {
               Explore
             </li>
 
-            <a href="">
-              <li className="font-semibold hover:text-primary hover:cursor-pointer">
-                Profile
-              </li>
-            </a>
+           
           </ul>
 
           <Github className="hover:text-primary hover:cursor-pointer" />

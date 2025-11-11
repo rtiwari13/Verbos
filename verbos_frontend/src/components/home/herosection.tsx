@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import hero_image from "@/assets/home_page_images/hero_image.png";
 
+
 export default function HeroSection() {
   return (
     <section className="  min-h-[90vh] w-full  flex flex-col lg:flex-row items-center justify-center ">
@@ -10,9 +11,11 @@ export default function HeroSection() {
           <h1 className="   text-[56px]   text-chart-5 font-[650] ">
             Personal &
           </h1>
-          <h1 className=" text-[48px]  font-bold">Powerful Workspace</h1>
+          <h1 className=" text-[40px]  font-bold">Powerful Workspace</h1>
           <p className=" ">
-            Create documents, organize notebooks and manage tasks.
+            Verbos brings together notes, tasks, and documents - helping you stay organized
+            and productive everyday. 
+            
           </p>
           <div className="flex gap-4 pt-8 ">
             <a href="auth/signup">
@@ -37,6 +40,7 @@ export default function HeroSection() {
 
       {/* right image div */}
       <div className=" p-16 flex items-center justify-center ">
+      
         <img
           src={hero_image.src}
           alt=""
